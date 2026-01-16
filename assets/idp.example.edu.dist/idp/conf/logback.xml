@@ -152,7 +152,7 @@
 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <charset>UTF-8</charset>
-            <Pattern>%msg%n</Pattern>
+            <Pattern>%msg|%mdc{idp.remote_addr}%n</Pattern>
         </encoder>
     </appender>
     

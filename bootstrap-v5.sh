@@ -35,7 +35,7 @@ function set_internal_variables {
     SECRETS_PROPERTIES=$ASSETS/idp/credentials/secrets.properties
     ACTIVITY_LOG=$INSTALL_BASE/shibboleth-idp5-installer/activity.log
 
-    GIT_REPO=https://github.com/ausaccessfed/shibboleth-idp5-installer.git
+    GIT_REPO=https://github.com/pakistan-identity-federation/shibboleth-idp5-installer.git
     GIT_BRANCH=main
 
     FM_TEST_REG=https://manager.test.aaf.edu.au/
@@ -49,7 +49,7 @@ function ensure_mandatory_variables_set {
     ENABLE_BACKCHANNEL ENABLE_EDUGAIN IDP_BEHIND_PROXY DEFAULT_ENCRYPTION \
     REFEDS_BASELINE_IDP_V1 REFEDS_ASSURANCE_V2 REFEDS_RAF_UNIQUE REFEDS_RAF_EPPN_UNIQUE \
     REFEDS_RAF_EPA REFEDS_R_AND_S_V1_3 REFEDS_ANONYMOUS_V2 REFEDS_PSEUDONYMOUS_V2 \
-    REFEDS_PERSONALIZED_V2 REFEDS_CODE_OF_CONDUCT_V1 REFEDS_CODE_OF_CONDUCT_V2; do
+    REFEDS_PERSONALIZED_V2 REFEDS_CODE_OF_CONDUCT_V2; do
     if [ ! -n "${!var:-}" ]; then
       echo "Variable '$var' is not set! Set this in `basename $0`"
       exit 1
@@ -153,12 +153,6 @@ function ensure_mandatory_variables_set {
   if [ $REFEDS_PERSONALIZED_V2 != "true" ] && [ $REFEDS_PERSONALIZED_V2 != "false" ]
   then
      echo "Variable REFEDS_PERSONALIZED_V2 must be either true or false"
-     exit 1
-  fi
-
-  if [ $REFEDS_CODE_OF_CONDUCT_V1 != "true" ] && [ $REFEDS_CODE_OF_CONDUCT_V1 != "false" ]
-  then
-     echo "Variable REFEDS_CODE_OF_CONDUCT_V1 must be either true or false"
      exit 1
   fi
 
@@ -372,6 +366,8 @@ function set_ansible_host_vars {
     $ANSIBLE_HOST_VARS
   replace_property 'source_persistent_id:' "\"$PERSISTENT_ATTRIBUTE_ID\"" \
     $ANSIBLE_HOST_VARS
+  replace_property 'domain_name:' "\"$HOST_NAME\"" $ANSIBLE_HOST_VARS
+  replace_property 'acme_email:' "\"$ACME_EMAIL\"" $ANSIBLE_HOST_VARS
   if [ $DO_APT == "true" ]; then
       replace_property 'patch_with:' 'apt' $ANSIBLE_HOST_VARS
   fi
@@ -403,8 +399,6 @@ function set_ansible_host_vars {
   replace_property 'refeds_pseudonymous_v2:' "\"$REFEDS_PSEUDONYMOUS_V2\"" \
     $ANSIBLE_HOST_VARS
   replace_property 'refeds_personalized_v2:' "\"$REFEDS_PERSONALIZED_V2\"" \
-    $ANSIBLE_HOST_VARS
-  replace_property 'refeds_code_of_conduct_v1:' "\"$REFEDS_CODE_OF_CONDUCT_V1\"" \
     $ANSIBLE_HOST_VARS
   replace_property 'refeds_code_of_conduct_v2:' "\"$REFEDS_CODE_OF_CONDUCT_V2\"" \
     $ANSIBLE_HOST_VARS

@@ -1,6 +1,6 @@
 ---
 # ------------------------------------------------------------------------------
-# EXAMPLE: CONFIGURED FOR AAF PRODUCTION ENVIRONMENT
+# EXAMPLE: CONFIGURED FOR PKIFED PRODUCTION ENVIRONMENT
 # ------------------------------------------------------------------------------
 
 # Which environment are we running in
@@ -16,23 +16,23 @@ idp_entity_id: "https://idp.example.edu/idp/shibboleth"
 idp_attribute_scope: "example.edu"
 
 # Federation ID
-federation_id: "AAF"
+federation_id: "PKIFED"
 
 # The federation's group id used for metadata-based attribute filtering
-federation_group_id: "https://md.aaf.edu.au/aaf-metadata.xml"
+federation_group_id: "https://rr.pern.edu.pk/rr3/signedmetadata/federation/PKIFED_eduGAIN/metadata.xml"
 
 # Shared federation metadata
-metadata_url: "https://md.aaf.edu.au/aaf-metadata.xml"
+metadata_url: "https://rr.pern.edu.pk/rr3/signedmetadata/federation/PKIFED_eduGAIN/metadata.xml"
 
 # Shared federation certificate
-metadata_cert_url: "https://md.aaf.edu.au/aaf-metadata-certificate.pem"
-metadata_cert_sha256sum: 00ec963039ca877b7111db3188d3d646e071c4c84ab8201fc35ad62a77ffa1a1
+metadata_cert_url: "https://rr.pern.edu.pk/rr3/signedmetadata/metadata-signer2.pem"
+metadata_cert_sha256sum: f727c1bac792e4c8c888ba73fd6cb5de8ff71a58b68bc3e056393fc66db1b74f
 
 # Metadata file name
-metadata_file_name: aaf-metadata.xml
+metadata_file_name: pkifed-metadata.xml
 
 # Metadata certificate file name
-metadata_cert_file_name: aaf-metadata.pem
+metadata_cert_file_name: pkifed-metadata.pem
 
 # Your organisation's name
 organisation_name: "The University of Example"
@@ -54,7 +54,7 @@ home_organisation: "example.edu"
 # urn:mace:terena.org:schac:homeOrganizationType:au:university
 # urn:mace:terena.org:schac:homeOrganizationType:au:research-institution
 # urn:mace:terena.org:schac:homeOrganizationType:au:other
-home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:au:university"
+home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:pk:university"
 
 # Run yum -update on every execution of update_idp.sh
 server_patch: "true"
@@ -69,7 +69,7 @@ firewall: "firewalld"
 enable_backchannel: "false"
 
 # eduGAIN metadata
-edugain_metadata_url: "https://md.aaf.edu.au/aaf-edugain-metadata.xml"
+edugain_metadata_url: "https://rr.pern.edu.pk/rr3/signedmetadata/edugain-export-metadata.xml"
 
 # Enable eduGAIN
 enable_edugain: "false"
@@ -78,7 +78,7 @@ enable_edugain: "false"
 edugain_metadata_file_name: edugain-metadata.xml
 
 # eduGAIN Metadata certificate file name
-edugain_metadata_cert_file_name: aaf-metadata.pem
+edugain_metadata_cert_file_name: pkifed-metadata.pem
 
 # Source Persistent ID attribute name (for Subject ID and Pairwise ID)
 source_persistent_id:
@@ -100,4 +100,26 @@ fticks_secret_key:
 
 # FTicks delivery stream name
 delivery_stream_name: aafFticksReceiver
+
+# Lets Encrypt Configuration
+# Change Domain name and Email as per your University
+domain_name: idp.example.edu
+acme_email: waqas.ahmed0@gmail.com
+
+# Acme Type & Version
+acme_challenge_type: http-01
+acme_version: 2
+
+#Production Certificate
+acme_directory: https://acme-v02.api.letsencrypt.org/directory
+
+# Staging Testing Certifcate
+# acme_directory: https://acme-staging-v02.api.letsencrypt.org/directory
+
+# Local LetsEncrypt Directories
+letsencrypt_dir: /etc/letsencrypt
+letsencrypt_keys_dir: /etc/letsencrypt/keys
+letsencrypt_csrs_dir: /etc/letsencrypt/csrs
+letsencrypt_certs_dir: /etc/letsencrypt/certs
+letsencrypt_account_key: /etc/letsencrypt/account/account.key 
 

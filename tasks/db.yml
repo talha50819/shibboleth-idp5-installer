@@ -50,6 +50,23 @@
     group: root
     mode: 0600
 
+- name: 'Create statso database'
+  mysql_db:
+#    login_unix_socket: /var/lib/mysql/mysql.sock
+    name: statso
+    collation: utf8mb4_unicode_ci
+    encoding: utf8mb4
+    state: present
+
+- name: 'Create admin reporting tool stats database'
+  mysql_db:
+#    login_unix_socket: /var/lib/mysql/mysql.sock
+    name: stats
+    collation: utf8mb4_unicode_ci
+    encoding: utf8mb4
+    state: present
+
+
 - name: 'Create application database'
   mysql_db:
 #    login_unix_socket: /var/lib/mysql/mysql.sock
@@ -61,6 +78,30 @@
 - name: 'Create db user'
   mysql_user: 'name={{ db.username }} password={{ db.password }} priv={{ db.name }}.*:ALL state=present'
   register: db_user
+
+- name: 'Create db user for statso db'
+  mysql_user: 'name=statso_admin  password={{ db.password }} priv=statso.*:ALL state=present'
+  register: db_user
+
+- name: 'Create db user for admin reporting tool stats db'
+  mysql_user: 'name=stats_admin  password={{ db.password }} priv=stats.*:ALL state=present'
+  register: db_user
+
+- name: 'Copy over statso schema'
+  template:
+    src: templates/db/statso.sql
+    dest: '{{ installer.path }}/statso.sql'
+    owner: root
+    group: root
+    mode: 0600
+
+- name: 'Copy over admin reporting tool stats schema'
+  template:
+    src: templates/db/stats.sql
+    dest: '{{ installer.path }}/stats.sql'
+    owner: root
+    group: root
+    mode: 0600
 
 - name: 'Copy over AESPT schema'
   template:
@@ -94,3 +135,9 @@
 
 - name: 'Import Shibboleth IdP StorageRecords schema'
   mysql_db: 'state=import name={{ db.name }} target={{ installer.path }}/tb_storage_records_ddl.sql'
+
+- name: 'Import STATSO schema'
+  mysql_db: 'state=import name=statso target={{ installer.path }}/statso.sql'
+
+- name: 'Import Admin reporting tool STATS schema'
+  mysql_db: 'state=import name=stats target={{ installer.path }}/stats.sql'

@@ -47,6 +47,12 @@
       </MetadataFilter>
     </MetadataProvider>
 
+    <MetadataProvider id="PERN-Federation"
+                  xsi:type="FileBackedHTTPMetadataProvider"
+                  backingFile="{{ shib_idp.home }}/metadata/pern-metadata.xml"
+                  metadataURL="https://rr.pern.edu.pk/rr3/metadata/federation/PERN-Federation/metadata.xml">
+    </MetadataProvider>
+
     {% if enable_edugain == "true" %}
     <!-- eduGAIN metadata -->
     <MetadataProvider id="eduGAINMetadata"

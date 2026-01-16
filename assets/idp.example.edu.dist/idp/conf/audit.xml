@@ -12,11 +12,15 @@
 
     <!--
     This bean defines a mapping between audit log categories and formatting strings.
-    -->
+    
     <util:map id="shibboleth.AuditFormattingMap">
         <entry key="Shibboleth-Audit" value="%a|%ST|%T|%u|%SP|%i|%ac|%t|%attr|%n|%f|%SSO|%XX|%XA|%b|%bb|%e|%S|%SS|%s|%UA" />
-    </util:map>
+    </util:map> -->
 
+    <util:map id="shibboleth.AuditFormattingMap">
+        <entry key="Shibboleth-Audit" value="%T|%b|%I|%SP|%P|%IDP|%bb|%III|%u|%ac|%attr|%n|%i|%X" />
+    </util:map>
+    
     <!-- Override the format of date/time fields in the log and/or convert to default time zone. -->
     <!--
     <bean id="shibboleth.AuditDateTimeFormat" class="java.lang.String" c:_0="yyyy-MM-dd'T'HH:mm:ss.SSSZZ" />
