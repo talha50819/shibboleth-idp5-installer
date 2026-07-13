@@ -38,8 +38,12 @@ function set_internal_variables {
     GIT_REPO=https://github.com/pakistan-identity-federation/shibboleth-idp5-installer.git
     GIT_BRANCH=main
 
-    FM_TEST_REG=https://manager.test.aaf.edu.au/
-    FM_PROD_REG=https://manager.aaf.edu.au/
+    # TODO: replace with the actual test/production URLs of the HEC Pakistan
+    # federation registry (e.g. the Jagger instance) before this is used for a
+    # real deployment. These were previously hardcoded to AAF's (Australia's)
+    # Federation Manager, which is the wrong registry for a Pakistani IdP.
+    FM_TEST_REG=https://jagger-test.example.edu.pk/rr3/
+    FM_PROD_REG=https://jagger.example.edu.pk/rr3/
 }
 
 
