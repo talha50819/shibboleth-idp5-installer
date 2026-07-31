@@ -11,12 +11,13 @@ Shibboleth Identity Provider (IdP) is a prominent IAM tool used for federated id
 ## Overview
 This installer automates the install of version 5 of the [Shibboleth IdP](https://shibboleth.atlassian.net/wiki/spaces/IDP5/overview) on a dedicated server, using the same Ansible automation originally built by the Australian Access Federation (AAF) and adapted here for HEC Pakistan IAM deployments. It supports one of the following operating systems:
 * Rocky Linux 8 or 9
+* AlmaLinux 8 or 9
 * CentOS Stream 8 or 9
 * RHEL 8 or 9
 * Oracle Linux 8 or 9
 * Ubuntu 20.04 (Focal Fossa) or 22.04 (Jammy Jellyfish)
 
-The manual preparation steps below (Python, timezone, Ansible) are shown for **both** Debian/Ubuntu (`apt`) and RHEL-family (`dnf`/`yum`) systems — pick the block matching your OS. Once `bootstrap-v5.sh` is running, it detects the OS itself and installs everything else (Jetty, MariaDB, Java 17, etc.) using the correct package manager automatically; the manual steps here only cover what must exist *before* the installer can run at all.
+The manual preparation steps below (Python, timezone, Ansible) are shown for **both** Debian/Ubuntu (`apt`) and RHEL-family (`dnf`/`yum`) systems — this covers RHEL, Rocky Linux, AlmaLinux, CentOS Stream, and Oracle Linux, since they all share the same `dnf`/`yum` commands; pick the block matching your OS. Once `bootstrap-v5.sh` is running, it detects the OS itself and installs everything else (Jetty, MariaDB, Java 17, etc.) using the correct package manager automatically; the manual steps here only cover what must exist *before* the installer can run at all.
 
 For background on the upstream AAF installer this is based on, see the [AAF IdPv4 Installer Knowledge base](https://support.aaf.edu.au/support/solutions/articles/19000159910-shibboleth-idp-version-5-installer) — note that AAF-specific details there (federation manager URLs, FTicks contacts) do not apply to an HEC Pakistan deployment; use this repo's own configuration instead (see [Preparing the bootstrap-v5.ini File](#preparing-the-bootstrap-v5ini-file) below).
 
@@ -73,7 +74,7 @@ Update and upgrade the database of available packages.
 apt update && apt upgrade -y
 ```
 
-**RHEL / Rocky / Stream / Oracle Linux:**
+**RHEL / Rocky / AlmaLinux / Stream / Oracle Linux:**
 ```bash
 dnf update -y
 ```
@@ -88,7 +89,7 @@ First, confirm that Python 3 is installed. If it's not, install it with the foll
 apt install -y python3 python3-pip python3-apt
 ```
 
-**RHEL / Rocky / Stream / Oracle Linux:**
+**RHEL / Rocky / AlmaLinux / Stream / Oracle Linux:**
 ```bash
 dnf install -y python3 python3-pip
 ```
@@ -134,7 +135,7 @@ apt update
 apt install -y ansible
 ```
 
-RHEL / Rocky / Stream / Oracle Linux:
+RHEL / Rocky / AlmaLinux / Stream / Oracle Linux:
 ```bash
 dnf install -y epel-release
 dnf install -y ansible
